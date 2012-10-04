@@ -61,12 +61,14 @@ class html_tag {
         $out = '';
         $out .= '<' . $this->tag;
         
+        // Write attributes
         if(!empty($this->attribs)) {
             foreach($this->attribs as $k => $v) {
                 $out .= ' ' . $k . '="' . $v . '"';
             }
         }
         
+        // end tag
         if($this->content == '') {
             $out .= ' />' . "\n";
         } else {
