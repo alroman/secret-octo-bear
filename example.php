@@ -1,7 +1,3 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,10 +20,10 @@ and open the template in the editor.
             $table->add_class('table')
                   ->add_class('table-bordered');
             
+            // Create a row
             $row = new html_tag('tr');
-            $td = new html_tag('td', 'column');
-//            $row->add_content($td)->add_content($td);
             
+            // Add row columns as array
             $cols = array(
                 new html_tag('td', 'column 1'), 
                 new html_tag('td', 'column 2')
@@ -35,8 +31,15 @@ and open the template in the editor.
             
             $row->add_content($cols);
             
-            $table->add_tbody($row);
+            // Add the row to the table body,
+            // and add another row via constructor
+            $table->add_tbody($row)
+                  ->add_tbody(new html_tag('tr', array(
+                                                new html_tag('td', 'foo'), 
+                                                new html_tag('td', 'bar')
+                                            )));
             
+            // Render table
             echo $table->render();
             ?>
             
