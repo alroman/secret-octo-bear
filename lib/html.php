@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', True);
 
 
 class html_tag {
@@ -47,9 +49,24 @@ class html_tag {
         return $this;
     }
     
-    protected function _add_content($content) {
-        if(is_object($content) && get_class($content) == 'html_tag') {
+    private function _add_content($content) {
+        
+        // Handle objects
+        if(is_object($content) && $content instanceof html_tag) {
             $out = $content->render();
+        
+        // Handle arrays of objects
+        } else if (is_array($content)) {
+            
+            $out = '';
+
+            foreach($content as $c) {
+                if($c instanceof html_tag) {
+                    $out .= $c->render();
+                }
+            }
+            
+        // Handle plain ol strings
         } else if(is_string($content)) {
             $out = $content;
         }
@@ -95,23 +112,29 @@ class html_table extends html_tag {
     }
     
     public function add_thead($content) {
-        $this->thead .= $this->_add_content($content);
+        $this->thead .= $this->add_content($content)->render();
         return $this;
     }
     
     public function add_tbody($content) {
-        $this->tbody .= $this->_add_content($content);
+        $this->tbody .= $this->add_content($content)->render();
         return $this;
     }
     
     public function add_tfooter($content) {
-        $this->tfooter .= $this->_add_content($content);
+        $this->tfooter .= $this->add_content($content)->render();
         return $this;
     }
     
     public function render() {
+        $thead = new html_tag('thead', $this->thead);
         $tbody = new html_tag('tbody', $this->tbody);
-        $this->content = $tbody->render();
+        $tfoot = new html_tag('tfoot', $this->tfooter);
+        
+        $this->content = $thead->render() 
+                       . $tbody->render()
+                       . $tfoot->render();
+        
         return parent::render();
     }
 }
