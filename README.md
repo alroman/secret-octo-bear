@@ -6,7 +6,6 @@ Some examples:
 
 ## PHP
 
-'''php
     // Table
     $table = new html_table();
     $table->add_class('table')
@@ -33,11 +32,10 @@ Some examples:
 
     // Render table
     echo $table->render();
-'''
+
 
 ## Javascript
 
-''' javascript
     var tag = new html_element({
         tag : 'div',
         content : 'some initial content',
@@ -50,5 +48,4 @@ Some examples:
 
     // Render the tag with
     tag.render()
-'''
 
