@@ -17,33 +17,20 @@ function html_element(elem) {
         }
 
         out += '>';
-        out += this.content
+        out += this.content;
         out += '</' + this.tag + '>' + "\n";
 
         // return HTML
         return out;
-    }
+    };
 
     this.addClass = function(name) {
-        if(this.attribs['class'] == undefined) {
+        if(this.attribs['class'] === undefined) {
             this.attribs['class'] = name;
 
         } else {
             this.attribs['class'] += ' ' + name;
 
         }
-    }
+    };
 }
-
-var f = new html_element({
-    tag : 'div',
-    content : 'foo',
-    attribs : {
-        'id' : 'gargar'
-    }
-})
-
-f.addClass('classa');
-
-console.log('right here');
-console.log(f.render());
